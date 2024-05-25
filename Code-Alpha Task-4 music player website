@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Music Player</title>
+    <link rel="stylesheet" href="music.css">
+</head>
+<body></body>
+    <div class="player">
+        <div class="details">
+            <h2 id="title">Telugu songs</h2>
+            <h3 id="artist">Devi sri prasad</h3>
+            
+            </div>
+        <audio id="audio" controls>
+            <source src="C:\Users\91798\Downloads\Buttabomma - SenSongsMp3.Co.mp3" type="desktop">
+
+        </audio>
+
+        
+        <div class="controls">
+            <button id="prev">Prev</button>
+            <button id="play">Play</button>
+            <button id="next">Next</button>
+        </div>
+    </div>
+    <script src="music.js"></script>
+</body>
+</html>
+
+
+CSS :
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 20;
+    background-color: #f0f0f0;
+    
+    
+}
+
+
+
+
+.player {
+    background: green;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20p pink(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+    background-color: aqua;
+    
+
+
+}
+
+.details {
+    margin-bottom: 20px;
+    
+}
+
+.controls button {
+    background: #ff00ae;
+    border: none;
+    color: rgb(255, 255, 255);
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+.controls button:hover {
+    background: #0009b3;
+}
+
+JAVASCRIPT:
+
+const audio = document.getElementById('audio');
+const playButton = document.getElementById('play');
+const prevButton = document.getElementById('prev');
+const nextButton = document.getElementById('next');
+const title = document.getElementById('title');
+const artist = document.getElementById('artist');
+
+const songs = [
+    { title: 'Song 1', artist: 'Artist 1', src: 'song1.mp3' },
+    { title: 'Song 2', artist: 'Artist 2', src: 'song2.mp3' },
+    { title: 'Song 3', artist: 'Artist 3', src: 'song3.mp3' },
+];
+
+let currentSongIndex = 0;
+
+function loadSong(song) {
+    title.textContent = song.title;
+    artist.textContent = song.artist;
+    audio.src = song.src;
+}
+
+function playSong() {
+    audio.play();
+    playButton.textContent = 'Pause';
+}
+
+function pauseSong() {
+    audio.pause();
+    playButton.textContent = 'Play';
+}
+
+function prevSong() {
+    currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+    loadSong(songs[currentSongIndex]);
+    playSong();
+}
+
+function nextSong() {
+    currentSongIndex = (currentSongIndex + 1) % songs.length;
+    loadSong(songs[currentSongIndex]);
+    playSong();
+}
+
+playButton.addEventListener('click', () => {
+    if (audio.paused) {
+        playSong();
+    } else {
+        pauseSong();
+    }
+});
+
+prevButton.addEventListener('click', prevSong);
+nextButton.addEventListener('click', nextSong);
+
+// Load the first song on page load
+loadSong(songs[currentSongIndex]);
